@@ -25,12 +25,10 @@ jobs:
 
       - name: Create Complete Flutter App
         run: |
-          # إنشاء مشروع فلاتر كامل وجاهز بكل ملفات أندرويد تلقائياً
           flutter create temp_app --org com.fannipro --template=app
           cd temp_app
           flutter pub add webview_flutter
           
-          # إعداد main.dart للـ WebView
           cat << 'EOF' > lib/main.dart
           import 'package:flutter/material.dart';
           import 'package:webview_flutter/webview_flutter.dart';
@@ -81,15 +79,12 @@ jobs:
           }
           EOF
 
-          # تجهيز المجلد والأصول
           mkdir -p assets
           cp ../index.html assets/index.html || cp ../index-1.html assets/index.html
           
-          # إضافة Asset إلى pubspec.yaml
           echo "  assets:" >> pubspec.yaml
           echo "    - assets/index.html" >> pubspec.yaml
 
-          # بناء الـ APK
           flutter build apk --release
 
       - name: Upload APK
