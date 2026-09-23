@@ -1,4 +1,4 @@
-name: Build Flutter APK
+name: Flutter APK Build
 
 on:
   workflow_dispatch:
@@ -9,10 +9,10 @@ jobs:
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - name: Set up Java
+        uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -20,16 +20,80 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.19.0'
           channel: 'stable'
 
-      - name: Install Dependencies
-        run: flutter pub get
+      - name: Create Complete Flutter App
+        run: |
+          # إنشاء مشروع فلاتر كامل وجاهز بكل ملفات أندرويد تلقائياً
+          flutter create temp_app --org com.fannipro --template=app
+          cd temp_app
+          flutter pub add webview_flutter
+          
+          # إعداد main.dart للـ WebView
+          cat << 'EOF' > lib/main.dart
+          import 'package:flutter/material.dart';
+          import 'package:webview_flutter/webview_flutter.dart';
 
-      - name: Build APK
-        run: flutter build apk --release
+          void main() {
+            runApp(const MyApp());
+          }
+
+          class MyApp extends StatelessWidget {
+            const MyApp({super.key});
+
+            @override
+            Widget build(BuildContext context) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                title: 'فني برو',
+                home: const WebViewScreen(),
+              );
+            }
+          }
+
+          class WebViewScreen extends StatefulWidget {
+            const WebViewScreen({super.key});
+
+            @override
+            State<WebViewScreen> createState() => _WebViewScreenState();
+          }
+
+          class _WebViewScreenState extends State<WebViewScreen> {
+            late final WebViewController _controller;
+
+            @override
+            void initState() {
+              super.initState();
+              _controller = WebViewController()
+                ..setJavaScriptMode(JavaScriptMode.unrestricted)
+                ..loadFlutterAsset('assets/index.html');
+            }
+
+            @override
+            Widget build(BuildContext context) {
+              return Scaffold(
+                body: SafeArea(
+                  child: WebViewWidget(controller: _controller),
+                ),
+              );
+            }
+          }
+          EOF
+
+          # تجهيز المجلد والأصول
+          mkdir -p assets
+          cp ../index.html assets/index.html || cp ../index-1.html assets/index.html
+          
+          # إضافة Asset إلى pubspec.yaml
+          echo "  assets:" >> pubspec.yaml
+          echo "    - assets/index.html" >> pubspec.yaml
+
+          # بناء الـ APK
+          flutter build apk --release
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v3
         with:
-          name: fanni-pro-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          name: fanni-pro-app
+          path: temp_app/build/app/outputs/flutter-apk/app-release.apk
