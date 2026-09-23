@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#6366f1">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #f1f5f9;
+            --surface: #ffffff;
+            --text: #1e293b;
+            --text-light: #64748b;
+            --border: #e2e8f0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            direction: rtl;
+            overflow-x: hidden;
+            padding-bottom: 75px;
+            padding-top: 56px; 
+            color: var(--text);
+        }
+
+        iframe, div[id*="compat"], div[class*="banner"] {
+            display: none !important;
+            height: 0px !important;
+            opacity: 0 !important;
+            visibility: hidden !important;
+        }
+
+        .fixed-action-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 12px;
+            z-index: 9999; 
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .header-brand-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: white;
+            flex: 1;
+            text-align: center;
+            padding: 0 10px;
+        }
+
+        .header-logo {
+            width: 32px;
+            height: 32px;
+            background: rgba(255,255,255,0.22);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+        }
+
+        .header-title-box h1 {
+            font-size: 14px;
+            font-weight: 800;
+            line-height: 1.1;
+        }
+        
+        .header-title-box span {
+            font-size: 9.5px;
+            opacity: 0.8;
+            display: block;
+            font-weight: 600;
+        }
+
+        .icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.14);
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .icon-btn:active { transform: scale(0.94); }
+        
+        .notif-badge {
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            width: 17px;
+            height: 17px;
+            background: var(--danger);
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid var(--primary);
+        }
+
+        .scrollable-header-content {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            padding: 12px 14px 16px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; 
+            position: relative;
+            z-index: 100;
+        }
+
+        /* ستايل الكروت الاحترافية المصممة حديثاً */
+        .result-shine-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #0f0c20 0%, #15102a 100%) !important;
+            border: 2px solid #ff9f43 !important;
+            border-radius: 14px;
+            padding: 14px;
+            margin: 0;
+            cursor: pointer;
+            color: white !important;
+            box-shadow: 0 4px 15px rgba(255, 159, 67, 0.25);
+            position: relative;
+            overflow: hidden;
+            text-decoration: none !important;
+            z-index: 9999 !important;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .result-shine-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: skewX(-25deg);
+            animation: fastShine 3s infinite;
+        }
+        @keyframes fastShine {
+            0% { left: -100%; }
+            20% { left: 150%; }
+            100% { left: 150%; }
+        }
+
+        .btn-animate {
+            background: linear-gradient(90deg, #ff9f43, #ff5252);
+            color: white;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 6px 12px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(255, 82, 82, 0.3);
+            animation: pulse-btn 2s infinite;
+        }
+
+        @keyframes pulse-btn {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .section-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 14px 6px;
+        }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            font-weight: 800;
+            color: var(--text);
+        }
+
+        .section-label i {
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .view-all {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .cards-scroll {
+            display: flex;
+            gap: 10px;
+            padding: 0 14px 4px 14px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .cards-scroll::-webkit-scrollbar { display: none; }
+
+        .h-card {
+            flex-shrink: 0;
+            width: 215px;
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .h-card-img {
+            position: relative;
+            height: 105px;
+            overflow: hidden;
+        }
+
+        .h-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .h-card-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.25) 0%, transparent 50%);
+        }
+
+        .h-card-tag {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 3px 8px;
+            background: rgba(99, 102, 241, 0.9);
+            color: white;
+            font-size: 9.5px;
+            font-weight: 700;
+            border-radius: 50px;
+            z-index: 2;
+        }
+
+        .h-card-body { padding: 10px; }
+
+        .h-card-title {
+            font-size: 12.5px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+            margin-bottom: 6px;
+            height: 35px;
+            overflow: hidden;
+        }
+
+        .h-card-stats {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 10.5px;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .h-card-stats i { font-size: 11px; margin-left: 2px; }
+        .pdf-icon { color: #2563eb !important; }
+        .download-icon { color: #16a34a !important; }
+        .view-icon { color: #6366f1 !important; }
+
+        .gap { height: 6px; background: var(--bg); margin: 4px 0; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            padding: 0 14px;
+        }
+
+        .grid-card {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            text-decoration: none;
+            color: inherit;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+            border: 1px solid var(--border);
+        }
+
+        .grid-card-img {
+            position: relative;
+            height: 90px;
+            overflow: hidden;
+        }
+
+        .grid-card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .grid-card-img::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.2) 0%, transparent 60%);
+        }
+
+        .grid-float {
+            position: absolute;
+            bottom: -12px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: var(--surface);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: var(--primary);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+            border: 2px solid var(--border);
+            z-index: 2;
+        }
+
+        .grid-card-body { padding: 16px 10px 10px; }
+
+        .grid-card-title {
+            font-size: 11.5px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 5px;
+            height: 34px;
+            overflow: hidden;
+        }
+
+        .grid-card-views {
+            font-size: 10px;
+            color: var(--text-light);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .chat-section { padding: 0 14px 16px; }
+
+        .chat-card {
+            background: linear-gradient(135deg, #312e81 0%, #1e1b4b 100%);
+            border-radius: 14px;
+            padding: 14px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            color: white;
+            display: block;
+            box-shadow: 0 4px 12px rgba(30, 27, 75, 0.25);
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+
+        .chat-users { display: flex; align-items: center; }
+
+        .chat-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid #312e81;
+            margin-left: -8px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .chat-avatar:first-child { margin-left: 0; }
+        .chat-avatar.more { background: rgba(255,255,255,0.2); font-size: 9px; }
+        .chat-title-text { margin-right: 8px; }
+        .chat-title-text div:first-child { font-size: 13px; font-weight: 800; }
+        .chat-title-text div:last-child { font-size: 10.5px; opacity: 0.7; font-weight: 600; }
+
+        .live-badge {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            background: rgba(16, 185, 129, 0.2);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 50px;
+            font-size: 10px;
+            font-weight: 700;
+            color: #34d399;
+        }
+
+        .live-dot {
+            width: 7px;
+            height: 7px;
+            background: #34d399;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .chat-messages { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+
+        .msg {
+            max-width: 85%;
+            padding: 6px 10px;
+            border-radius: 10px;
+            font-size: 11.5px;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        .msg-in { align-self: flex-start; background: rgba(255,255,255,0.12); border-bottom-left-radius: 3px; }
+        .msg-out { align-self: flex-end; background: rgba(99, 102, 241, 0.35); border-bottom-right-radius: 3px; }
+
+        .chat-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .chat-stats {
+            display: flex;
+            gap: 10px;
+            font-size: 10.5px;
+            opacity: 0.8;
+            font-weight: 600;
+        }
+        .chat-stats i { margin-left: 3px; }
+
+        .chat-btn {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 12px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50px;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+            z-index: 9999; 
+            padding: 6px 0 10px;
+        }
+
+        .nav-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            text-decoration: none;
+            color: var(--text-light);
+            padding: 4px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            flex: 1;
+        }
+
+        .nav-item i { font-size: 22px; margin-bottom: 2px; }
+        .nav-item.active { color: var(--primary); }
+        .nav-item.active i::after {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 0 0 4px 4px;
+        }
+
+        .sidebar-bg {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 200;
+            display: none;
+        }
+        .sidebar-bg.show { display: block; }
+
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100%;
+            background: var(--surface);
+            z-index: 201;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            box-shadow: -4px 0 16px rgba(0,0,0,0.1);
+        }
+        .sidebar.open { transform: translateX(0); }
+
+        .sidebar-head {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            padding: 24px 16px 20px;
+            color: white;
+        }
+
+        .sidebar-close {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            font-size: 14px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .sidebar-user { display: flex; align-items: center; gap: 12px; }
+        .user-avatar { width: 48px; height: 48px; border-radius: 12px; background: rgba(255,255,255,0.2); display: flex; align-items: center; justify-content: center; font-size: 24px; }
+        .user-info h3 { font-size: 15px; font-weight: 800; }
+        .user-info span { font-size: 11px; opacity: 0.8; font-weight: 600; }
+
+        .sidebar-menu { list-style: none; padding: 8px 0; flex: 1; overflow-y: auto; }
+        .sidebar-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 13px;
+            margin: 0 8px;
+            border-radius: 10px;
+        }
+
+        .sidebar-menu li a:active { background: rgba(99, 102, 241, 0.08); color: var(--primary); }
+        .sidebar-menu li a i {
+            width: 32px;
+            height: 32px;
+            border-radius: 8px;
+            background: var(--bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            color: var(--text-light);
+        }
+
+        .sidebar-foot { padding: 14px; border-top: 1px solid var(--border); font-size: 11px; color: var(--text-light); text-align: center; font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="fixed-action-bar">
+    <button class="icon-btn" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+    
+    <div class="header-brand-center">
+        <div class="header-logo">
+            <i class="fas fa-graduation-cap"></i>
+        </div>
+        <div class="header-title-box">
+            <h1>تطبيق فني برو</h1>
+            <span>مساعد طالب التعليم الفني</span>
+        </div>
+    </div>
+    
+    <button class="icon-btn" style="position: relative;" onclick="window.location.href='http://action_notifications'">
+        <i class="fas fa-bell"></i>
+        <span class="notif-badge">3</span>
+    </button>
+</div>
+
+<div class="scrollable-header-content">
+    <!-- كارت خدمات التنسيق الإلكتروني الجديد بدلاً من عداد الامتحانات -->
+    <a href="go:125" style="text-decoration:none; display:block; width:100%; border-radius:16px; background:linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%); padding:12px 16px; border:1px solid rgba(99,102,241,0.3); box-shadow:0 8px 25px rgba(0,0,0,0.4); font-family:system-ui, -apple-system, sans-serif; box-sizing:border-box; transition:transform 0.2s ease;">
+  <div style="display:flex; align-items:center; justify-content:space-between; direction:rtl; gap:12px;">
+    
+    <div style="display:flex; flex-direction:column; gap:6px; flex-grow:1;">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <span id="st-txt" style="font-size:10px; font-weight:700; background:rgba(245,158,11,0.15); color:#fbbf24; border:1px solid rgba(245,158,11,0.3); padding:2px 8px; border-radius:20px; width:fit-content; white-space:nowrap;">جاري التحميل...</span>
+        <span style="font-size:13px; font-weight:700; color:#ffffff; letter-spacing:-0.2px;">خدمات التنسيق الإلكتروني 2026</span>
+      </div>
+      
+      <!-- العد التنازلي بتصميم احترافي -->
+      <div style="display:flex; gap:6px; direction:ltr; margin-top:2px; align-items:center;">
+        <div style="display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:4px 8px; border-radius:8px; min-width:32px;">
+          <b id="cd-sec" style="font-size:13px; font-weight:800; color:#38bdf8; font-family:monospace; line-height:1;">00</b>
+          <span style="font-size:8px; color:#94a3b8; font-weight:600; margin-top:2px;">ثانية</span>
+        </div>
+        <span style="color:rgba(255,255,255,0.2); font-weight:bold; font-size:12px;">:</span>
+        <div style="display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:4px 8px; border-radius:8px; min-width:32px;">
+          <b id="cd-min" style="font-size:13px; font-weight:800; color:#38bdf8; font-family:monospace; line-height:1;">00</b>
+          <span style="font-size:8px; color:#94a3b8; font-weight:600; margin-top:2px;">دقيقة</span>
+        </div>
+        <span style="color:rgba(255,255,255,0.2); font-weight:bold; font-size:12px;">:</span>
+        <div style="display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:4px 8px; border-radius:8px; min-width:32px;">
+          <b id="cd-hrs" style="font-size:13px; font-weight:800; color:#38bdf8; font-family:monospace; line-height:1;">00</b>
+          <span style="font-size:8px; color:#94a3b8; font-weight:600; margin-top:2px;">ساعة</span>
+        </div>
+        <span style="color:rgba(255,255,255,0.2); font-weight:bold; font-size:12px;">:</span>
+        <div style="display:flex; flex-direction:column; align-items:center; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); padding:4px 8px; border-radius:8px; min-width:32px;">
+          <b id="cd-day" style="font-size:13px; font-weight:800; color:#38bdf8; font-family:monospace; line-height:1;">00</b>
+          <span style="font-size:8px; color:#94a3b8; font-weight:600; margin-top:2px;">يوم</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- زر الدخول -->
+    <div style="background:linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color:#fff; font-size:11px; font-weight:700; padding:10px 14px; border-radius:10px; box-shadow:0 4px 12px rgba(79,70,229,0.4); white-space:nowrap; display:flex; align-items:center; gap:4px; border:1px solid rgba(255,255,255,0.15);">
+      <span>دخول</span>
+      <span style="font-size:12px;">←</span>
+    </div>
+
+  </div>
+</a>
+
+<script>
+  (function(){
+    var sDate = new Date(new Date().getFullYear(), 8, 5, 0, 0, 0).getTime();
+    var eDate = new Date(new Date().getFullYear(), 8, 13, 23, 59, 59).getTime();
+
+    function update() {
+      var now = new Date().getTime();
+      var txt = document.getElementById('st-txt');
+      var target = sDate;
+
+      if (now < sDate) {
+        target = sDate;
+        txt.innerText = "متبقي على البدء";
+        txt.style.background = "rgba(245, 158, 11, 0.15)";
+        txt.style.color = "#fbbf24";
+        txt.style.borderColor = "rgba(245, 158, 11, 0.3)";
+      } else if (now >= sDate && now <= eDate) {
+        target = eDate;
+        txt.innerText = "التسجيل مفتوح الآن";
+        txt.style.background = "rgba(34, 197, 94, 0.15)";
+        txt.style.color = "#4ade80";
+        txt.style.borderColor = "rgba(34, 197, 94, 0.3)";
+      } else {
+        txt.innerText = "انتهى التنسيق";
+        txt.style.background = "rgba(239, 68, 68, 0.15)";
+        txt.style.color = "#f87171";
+        txt.style.borderColor = "rgba(239, 68, 68, 0.3)";
+        document.getElementById('cd-day').innerText = "00";
+        document.getElementById('cd-hrs').innerText = "00";
+        document.getElementById('cd-min').innerText = "00";
+        document.getElementById('cd-sec').innerText = "00";
+        return;
+      }
+
+      var diff = target - now;
+      var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      var s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      document.getElementById('cd-day').innerText = d < 10 ? "0" + d : d;
+      document.getElementById('cd-hrs').innerText = h < 10 ? "0" + h : h;
+      document.getElementById('cd-min').innerText = m < 10 ? "0" + m : m;
+      document.getElementById('cd-sec').innerText = s < 10 ? "0" + s : s;
+    }
+
+    setInterval(update, 1000);
+    update();
+  })();
+</script>
+
+</div>
+    <!-- الكارت الاحترافي للاستعلام عن النتيجة -->
+    
+<!-- عنوان القسم المطور بشكل أكثر وضوحاً واحترافية --> 
+<div class="section-head">
+    <div class="section-label"><i class="fas fa-folder-open"></i>خدماتنا للطلاب 2026</div>
+</div>
+
+<div class="cards-scroll">
+
+    <!-- 1. كارت التنسيق الجديد -->
+    <a href="go:125" class="h-card" style="border: 2px solid #6366f1 !important; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.25);">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/vxC5c9qq/1777771427636.png" alt="التنسيق" loading="lazy">
+            <span class="h-card-tag" style="background: #ef4444; font-weight: 800; animation: pulse 1.5s infinite;">هام حديث 🔥</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title" style="color: var(--primary); font-weight: 800;">خدمات التنسيق الإلكتروني 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>22.5K</span>
+                <span><i class="fas fa-university" style="color: var(--primary);"></i>سجل رغباتك</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 2. كارت بنك الاختبارات -->
+    <a href="go:50" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/sTZ26My/1777739019131.png" alt="بنك الاختبارات" loading="lazy">
+            <span class="h-card-tag" style="background: var(--primary);">250 ملف وجواب</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">بنك الاختبارات النهائية بالاجابة 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>15.2K</span>
+                <span><i class="fas fa-file-signature pdf-icon"></i>نماذج محلولة</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 3. كارت المذكرات -->
+    <a href="go:30" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/ZCBS41J/Picsart-26-05-03-02-29-51-535.jpg" alt="المذكرات والمراجعات" loading="lazy">
+            <span class="h-card-tag" style="background: var(--success);">500 ملف PDF</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">تحميل المذكرات والمراجعات النهائية 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>28.9K</span>
+                <span><i class="fas fa-cloud-download-alt download-icon"></i>تحميل سريع</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 4. كارت اختبر ذكائك -->
+    <a href="go:74" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/gZjphGy5/Picsart-26-05-12-18-24-51-116.jpg" alt="اختبر ذكائك" loading="lazy">
+            <span class="h-card-tag" style="background: var(--accent);">تطبيق تفاعلي</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">اختبر ذكائك / نشط ذاكرتك</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>10.4K</span>
+                <span><i class="fas fa-brain" style="color: var(--accent);"></i>ابدأ التحدي</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 5. كارت النسبة المئوية -->
+    <a href="go:40" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/ymTk28FX/Picsart-26-05-02-20-11-05-036.jpg" alt="حساب النسبة" loading="lazy">
+            <span class="h-card-tag" style="background: var(--secondary);">حاسبة ذكية</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">اعرف النسبة المؤويه لنتيجتك 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>32.1K</span>
+                <span><i class="fas fa-calculator" style="color: var(--secondary);"></i>احسب الآن</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 6. كارت المعادلات -->
+    <a href="go:V" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/Xr1JXSXT/Picsart-26-05-30-12-25-17-505.jpg" alt="المعادلات" loading="lazy">
+            <span class="h-card-tag" style="background: var(--danger);">دليل الكليات</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">خدمات معادلات الكليات 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>14.2K</span>
+                <span><i class="fas fa-university" style="color: var(--danger);"></i>شروط وتفاصيل</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 7. كارت النتائج -->
+    <a href="go:126" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/rRvgXYxS/Picsart-26-05-30-12-39-25-576.jpg" alt="النتائج" loading="lazy">
+            <span class="h-card-tag" style="background: var(--success);">فور ظهورها</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">خدمات نتائج الإمتحانات 2026</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>45.1K</span>
+                <span><i class="fas fa-poll" style="color: var(--success);"></i>استعلام فوري</span>
+            </div>
+        </div>
+    </a>
+
+    <!-- 8. كارت شروحات المناهج -->
+    <a href="#" class="h-card">
+        <div class="h-card-img">
+            <img src="https://i.ibb.co/LdfcGFcG/Picsart-26-05-30-12-28-09-545.jpg" alt="شروحات المناهج" loading="lazy">
+            <span class="h-card-tag" style="background: var(--accent);">جميع التخصصات</span>
+        </div>
+        <div class="h-card-body">
+            <div class="h-card-title">شروحات المناهج والدروس قريبا</div>
+            <div class="h-card-stats">
+                <span><i class="fas fa-eye view-icon"></i>18.7K</span>
+                <span><i class="fas fa-play-circle" style="color: var(--danger);"></i>قريبا سيتم تفعيل القسم</span>
+            </div>
+        </div>
+    </a>
+
+</div>
+</div>
+
+
+<div class="gap"></div>
+
+<div class="section-head">
+    <div class="section-label"><i class="fas fa-university"></i>خدمات الوزارة للطلاب 2026</div>
+</div>
+
+<div class="grid-2">
+    <a href="go:131" class="grid-card">
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/G4vfM886/Picsart-26-05-04-02-29-57-605.jpg" alt="النماذج الاسترشادية" loading="lazy">
+            <div class="grid-float" style="color: #2563eb;"><i class="fas fa-file-pdf"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title">النماذج الاسترشاديه للطلاب المكتبة الإلكترونيه</div>
+            <div class="grid-card-views">
+                <span><i class="fas fa-eye view-icon"></i> 14.6K</span>
+                <span><i class="fas fa-check-double" style="color: var(--success);"></i> رسمي</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="go:132" class="grid-card">
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/5xhcfdTK/Picsart-26-05-05-10-11-40-114.jpg" alt="جداول الامتحانات" loading="lazy">
+            <div class="grid-float" style="color: var(--accent);"><i class="fas fa-calendar-alt"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title">جداول الامتحانات للطلاب 2026</div>
+            <div class="grid-card-views">
+                <span><i class="fas fa-eye view-icon"></i> 29.8K</span>
+                <span><i class="fas fa-download download-icon"></i> تحميل</span>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div class="gap"></div>
+
+<div class="section-head">
+    <div class="section-label"><i class="fas fa-chalkboard-teacher"></i>منصة المدرس المعتمد والمعلنين</div>
+</div>
+
+<div class="grid-2">
+    <a href="go:200" class="grid-card" style="border: 1px dashed var(--accent);">
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/DPn2MJX8/1780144482753.png" alt="اشتراك مدرس" loading="lazy">
+            <div class="grid-float" style="color: var(--accent); border-color: var(--accent);"><i class="fas fa-plus"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title" style="color: var(--primary-dark);">انضم إلينا كمدرس معتمد 👨‍🏫</div>
+            <div class="grid-card-views">انشر شروحاتك ومذكراتك الآن!</div>
+        </div>
+    </a>
+
+    <a href="go:900" class="grid-card">
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/5hps1pnN/1780145508147.png" alt="أكاديمية المدرسين" loading="lazy">
+            <div class="grid-float"><i class="fas fa-star"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title">أعلن علي تطبيقنا الان</div>
+            <div class="grid-card-views">ننشر عروض للمشتركين الجدد</div>
+        </div>
+    </a>
+</div>
+
+<div class="gap"></div>
+
+<div class="section-head">
+    <div class="section-label"><i class="fas fa-th-large"></i>خدمات اخري</div>
+</div>
+
+<div class="grid-2">
+    <a href="go:130" class="grid-card">
+        <div class="h-card-tag" style="background: var(--danger); font-size: 8px; border-radius: 0 0 8px 0;">تنبيه هام</div>
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/3PcV7cb/Picsart-26-05-01-19-01-55-422.jpg" alt="تابع التحديثات" loading="lazy">
+            <div class="grid-float" style="color: #9333ea;"><i class="fas fa-bell"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title">تابعنا لمعرفة ومتابعة كل التحديثات الجديده</div>
+            <div class="grid-card-views">
+                <span><i class="fas fa-eye view-icon"></i> 8.7K</span>
+                <span><i class="fas fa-sync-alt" style="color: #9333ea;"></i> فوراً</span>
+            </div>
+        </div>
+    </a>
+
+    <a href="go:129" class="grid-card">
+        <div class="h-card-tag" style="background: var(--success); font-size: 8px; border-radius: 0 0 8px 0;">متصل الآن</div>
+        <div class="grid-card-img">
+            <img src="https://i.ibb.co/3yDsH92D/1780144654346.png" alt="استقبال رسائل الطلاب" loading="lazy">
+            <div class="grid-float" style="color: #2563eb;"><i class="fas fa-paper-plane"></i></div>
+        </div>
+        <div class="grid-card-body">
+            <div class="grid-card-title">لينك استقبال رسائل الطلاب 2026</div>
+            <div class="grid-card-views">
+                <span><i class="fas fa-eye view-icon"></i> 19.3K</span>
+                <span><i class="fas fa-headset" style="color: var(--success);"></i> تواصل معنا</span>
+            </div>
+        </div>
+    </a>
+</div>
+
+<div class="gap"></div>
+
+<div class="section-head">
+    <div class="section-label">
+        <i class="fas fa-comments" style="background: linear-gradient(135deg, #8b5cf6, #6d28d9);"></i>
+        شات الطلاب المباشر
+    </div>
+    <a href="go:26" class="view-all">فتح الشات</a>
+</div>
+
+<div class="chat-section">
+    <a href="go:26" class="chat-card">
+        <div class="chat-header">
+            <div style="display: flex; align-items: center;">
+                <div class="chat-users">
+                    <div class="chat-avatar">أ</div>
+                    <div class="chat-avatar">م</div>
+                    <div class="chat-avatar">ع</div>
+                    <div class="chat-avatar more">+12</div>
+                </div>
+                <div class="chat-title-text">
+                    <div>شات الطلاب المباشر</div>
+                    <div>نقاش ومساعدة فورية</div>
+                </div>
+            </div>
+            <div class="live-badge">
+                <span class="live-dot"></span>
+                <span id="online-count">47</span> متصل
+            </div>
+        </div>
+        <div class="chat-messages">
+            <div class="msg msg-in">حد عنده ملخص مادة الرياضيات التطبيقية؟</div>
+            <div class="msg msg-out">عندي ملخص كامل، بعته في القروب 📝</div>
+            <div class="msg msg-in">جزاك الله خير! هل فيه فيديوهات مراجعة كمان؟</div>
+        </div>
+        <div class="chat-footer">
+            <div class="chat-stats">
+                <span><i class="fas fa-users"></i>128 عضو</span>
+                <span><i class="fas fa-comment-dots"></i>342 رسالة اليوم</span>
+            </div>
+            <div class="chat-btn">
+                انضم الآن <i class="fas fa-arrow-left" style="font-size: 9px; margin-right: 4px;"></i>
+            </div>
+        </div>
+    </a>
+</div>
+
+<nav class="bottom-nav">
+    <div class="nav-row">
+        <a href="go:25" class="nav-item active"><i class="fas fa-home"></i><span>الرئيسية</span></a>
+        <a href="go:222" class="nav-item"><i class="fas fa-rss"></i><span>تابع</span></a>
+        <a href="http://action_share" class="nav-item"><i class="fas fa-share-alt"></i><span>مشاركة</span></a>
+        <a href="http://action_search" class="nav-item"><i class="fas fa-search"></i><span>بحث</span></a>
+    </div>
+</nav>
+
+<div class="sidebar-bg" id="sidebarBg" onclick="toggleSidebar()"></div>
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-head">
+        <button class="sidebar-close" onclick="toggleSidebar()">
+            <i class="fas fa-times"></i>
+        </button>
+        <div class="sidebar-user">
+            <div class="user-avatar">👨‍🎓</div>
+            <div class="user-info">
+                <h3>طالب التعليم الفني</h3>
+                <span>فني برو 2026</span>
+            </div>
+        </div>
+    </div>
+    <ul class="sidebar-menu">
+        <li><a href="go:25"><i class="fas fa-home"></i>الرئيسية</a></li>
+        <li><a href="go:26"><i class="fas fa-comments"></i>شات الطلاب المباشر</a></li>
+        <li><a href="go:50"><i class="fas fa-file-alt"></i>بنك الاختبارات النهائية</a></li>
+        <li><a href="go:30"><i class="fas fa-book"></i>بنك المذكرات والامتحانات</a></li>
+        <li><a href="#"><i class="fas fa-sticky-note"></i>ملخصات الشرح السريع قريبا</a></li>
+        <li><a href="#"><i class="fas fa-play-circle"></i>شروحات وفيديوهات المراجعة قريبااا</a></li>
+        <li><a href="go:40"><i class="fas fa-percentage"></i>حساب النسبة المئوية</a></li>
+        <li><a href="go:V"><i class="fas fa-university"></i>معادلات الكليات 2026</a></li>
+        <li><a href="go:126"><i class="fas fa-poll-h"></i>خدمات نتائج الإمتحانات 2026</a></li>
+        <li><a href="go:125"><i class="fas fa-link"></i>التنسيق الإلكتروني للجامعات</a></li>
+        <li><a href="go:132"><i class="fas fa-id-card"></i>جداول الإمتحانات 2026</a></li>
+        <li><a href="go:gg"><i class="fas fa-info-circle"></i>من نحن</a></li>
+    </ul>
+    <div class="sidebar-foot">فني برو © 2026</div>
+</div>
+
+<script>
+function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('sidebarBg').classList.toggle('show');
+}
+
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarBg').classList.remove('show');
+    }
+});
+
+setInterval(() => {
+    const el = document.getElementById('online-count');
+    if (el) {
+        el.textContent = 47 + Math.floor(Math.random() * 6) - 3;
+    }
+}, 8000);
+
+document.addEventListener('dblclick', (e) => e.preventDefault(), { passive: false });
+</script>
+
+</body>
+</html>
